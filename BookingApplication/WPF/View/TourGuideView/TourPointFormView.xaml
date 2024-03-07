@@ -1,0 +1,22 @@
+﻿<Window x:Class="BookingApplication.WPF.View.TourGuideView.TourPointFormView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookingApplication.WPF.View.TourGuideView"
+        mc:Ignorable="d"
+        Title="TourPointFormView" Height="450" Width="800">
+    <Grid>
+        <Grid Margin="10,10,10,10">
+            <TextBlock  HorizontalAlignment="Left" Width="89" Margin="11,10,0,387">Name:</TextBlock>
+            <TextBox x:Name="nameTxt" VerticalAlignment="Top" HorizontalAlignment="Left" IsEnabled="False" Text="{Binding SelectedTourPoint.Name, Mode=TwoWay}" Width="145" Margin="10,32,0,0" Height="28"></TextBox>
+            <TextBlock HorizontalAlignment="Left" Width="155" VerticalAlignment="Top" Height="19" Text="Thumbnail Image Url:" Margin="12,65,0,0"/>
+            <TextBox x:Name="urlTxt" VerticalAlignment="Top" HorizontalAlignment="Left" IsEnabled="False" Text="{Binding InputUrl, Mode=TwoWay }" Margin="12,89,0,0" Width="260" Height="64"/>
+            <Button VerticalAlignment="Top" HorizontalAlignment="Left" IsEnabled="False" Command="{Binding DisplayImageCommand}"  Margin="10,158,0,0" Width="155"  Height="49">
+                Display Image
+            </Button>
+            <Image x:Name="imageDisplay" HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="{Binding SelectedImage.Url, Mode=TwoWay}" Margin="297,0,0,110" Height="270" Width="480"></Image>
+            <Button Margin="290,357,290,10" Width="200" Command="{Binding SaveTourPointFormCommand}">Return</Button>
+        </Grid>
+    </Grid>
+</Window>

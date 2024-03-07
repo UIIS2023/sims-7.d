@@ -1,0 +1,183 @@
+﻿<Page x:Class="BookingApplication.WPF.View.TourGuestView.ToursOverviewPage"
+      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:local="clr-namespace:BookingApplication.WPF.View.TourGuestView.Validation"
+      xmlns:inverter="clr-namespace:BookingApplication.WPF.View.TourGuestView.Converters"
+      xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:tourGuestViewModel="clr-namespace:BookingApplication.WPF.ViewModel.TourGuestViewModel"
+      xmlns:dto="clr-namespace:BookingApplication.DTO"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ToursOverview">
+<Page.Resources>
+<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
+    <inverter:LocationConverter x:Key="LocationConverter" />
+    <inverter:BooleanInverterConverter x:Key="BooleanInverterConverter"></inverter:BooleanInverterConverter>
+    <Style x:Key="MyButtonStyle" TargetType="Button">
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            CornerRadius="19"
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</Page.Resources>
+    <DockPanel>
+        <Label FontSize="50" DockPanel.Dock="Top" HorizontalAlignment="Center">OVERVIEW</Label>
+        <StackPanel DockPanel.Dock="Left" Width="150"
+        >
+            <Label>Tour duration</Label>
+            <xctk:DoubleUpDown Minimum="0"  Name="DurationTextBox" 
+                               Value="{Binding TourFilterDto.Duration}"
+            >
+
+            </xctk:DoubleUpDown>
+            <Label>Language</Label>
+            <TextBox Name="LanguageTextBox" MinHeight="20">
+                <TextBox.Text>
+                    <Binding Path="TourFilterDto.Language" UpdateSourceTrigger="PropertyChanged" NotifyOnValidationError="True">
+                        <Binding.ValidationRules>
+                            <local:LettersValidation />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <GroupBox Height="130">
+                <GroupBox.Header>Location</GroupBox.Header>
+                <StackPanel>
+                    <Label>Country</Label>
+                    <ComboBox x:Name="CountryComboBox"
+                          ItemsSource="{Binding Countries}"
+                          SelectedItem="{Binding TourFilterDto.Location.Country}"
+                          SelectedIndex="{Binding SelectedCountryIndex}">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="SelectionChanged">
+                                <b:InvokeCommandAction Command="{Binding CountryChangedCommand}" />
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+
+                        
+                    </ComboBox>
+                    <Label>City</Label>
+                    <ComboBox Name="CityComboBox"
+                              ItemsSource="{Binding Cities}"
+                              IsEnabled="{Binding IsEnabled}"
+                          SelectedItem="{Binding TourFilterDto.Location.City}"
+                              SelectedIndex="{Binding SelectedCityIndex}"></ComboBox>
+                </StackPanel>
+            </GroupBox>
+
+            <Label>Group size</Label>
+            <xctk:IntegerUpDown Minimum="0" Name="SizeTextBox" Value="{Binding TourFilterDto.GroupSize}" Margin="0, 0, 0, 10"></xctk:IntegerUpDown>
+            <Button Name="FilterButton" Command="{Binding FilterCommand}" IsEnabled="{Binding ElementName=LanguageTextBox, Path=(Validation.HasError), Converter={StaticResource BooleanInverterConverter}}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>Search
+            </Button>
+            <Button Name="ResetButton" Command="{Binding ResetAllCommand}" Margin="0, 10, 0, 0">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>Clear All
+            </Button>
+        </StackPanel>
+        <Grid>
+       <ListView Name="ToursListView" ItemsSource="{Binding Tours}" SelectedItem="{Binding SelectedTour}">
+           <ListView.ItemContainerStyle>
+               <Style TargetType="{x:Type ListViewItem}">
+                   <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                   <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                   <Setter Property="Focusable" Value="True" />
+                   <Setter Property="Margin" Value="0 0 0 50"/>
+                   <Setter Property="Template">
+                       <Setter.Value>
+                           <ControlTemplate TargetType="{x:Type ListViewItem}">
+                               <Border Name="border" Padding="2" SnapsToDevicePixels="true">
+                                   <ContentPresenter />
+                               </Border>
+                               <ControlTemplate.Triggers>
+                                   <Trigger Property="IsSelected" Value="true">
+                                       <Setter TargetName="border" Property="Background" Value="Transparent"/>
+                                       <Setter Property="Foreground" Value="Transparent"/>
+                                   </Trigger>
+                                   <MultiTrigger>
+                                       <MultiTrigger.Conditions>
+                                           <Condition Property="IsSelected" Value="false"/>
+                                           <Condition Property="IsMouseOver" Value="true"/>
+                                       </MultiTrigger.Conditions>
+                                       <Setter TargetName="border" Property="Background" Value="Transparent"/>
+                                       <Setter Property="Foreground" Value="{StaticResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                                   </MultiTrigger>
+                                   <Trigger Property="IsEnabled" Value="false">
+                                       <Setter Property="Foreground" Value="{StaticResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                   </Trigger>
+                               </ControlTemplate.Triggers>
+                           </ControlTemplate>
+                       </Setter.Value>
+                   </Setter>
+               </Style>
+           </ListView.ItemContainerStyle>
+           <ListView.ItemTemplate>
+               <DataTemplate>
+                   <DockPanel>
+                       <Image Name="MyImage"
+                              Width="300"
+                              Height="200"
+                              Stretch="UniformToFill"
+                              Source="{Binding ThumbnailUrl}"></Image>
+                       <StackPanel Width="300"
+                                   Margin="10"
+                                   >
+                           <TextBlock FontWeight="ExtraBold" Text="{Binding Name}" Foreground="Black" FontFamily="Sans Serif" FontSize="20" ></TextBlock>
+                           <TextBlock FontWeight="Bold" Text="{Binding Converter={StaticResource LocationConverter}}" Foreground="Black" FontFamily="Sans Serif" FontSize="15" TextWrapping="Wrap"></TextBlock>
+                           <TextBlock Text="{Binding Description, StringFormat={}{0}&#x0a;‎}" Foreground="Black" TextWrapping="Wrap"></TextBlock>
+                           
+                           <TextBlock FontSize="14" Text="{Binding Duration, StringFormat={}Duration: {0} hours}" Foreground="Black" TextWrapping="Wrap"></TextBlock>
+                       </StackPanel>
+                      
+                       <Button
+                           Name="BookTourButton"
+                           Width="200"
+                           Height="50"
+                           HorizontalAlignment="Right" 
+                           Command="{Binding DataContext.BookTourCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                           CommandParameter="{Binding}"
+                           Style="{StaticResource MyButtonStyle}">
+                           <Button.Resources>
+                               <Style TargetType="Border">
+                                   <Setter Property="CornerRadius" Value="10"/>
+                               </Style>
+                           </Button.Resources>Book
+                       </Button>
+                   </DockPanel>
+               </DataTemplate>
+           </ListView.ItemTemplate>
+       </ListView>
+        </Grid>
+    </DockPanel>
+</Page>

@@ -1,0 +1,109 @@
+﻿<Window x:Class="BookingApplication.WPF.View.OwnerView.AccommodationRegistration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="AccommodationRegistration"  WindowStartupLocation="CenterScreen" Height="450" Width="800" FontWeight="Bold" FontStyle="Italic">
+    <Window.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <StackPanel>
+                <!-- Placeholder for the TextBox itself -->
+                <AdornedElementPlaceholder x:Name="textBox" />
+                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red" />
+            </StackPanel>
+
+        </ControlTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.2,1" StartPoint="0.2,0">
+                <GradientStop Color="white"/>
+                <GradientStop Color="#94d2bd" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="433*"/>
+            <ColumnDefinition Width="367*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" Margin="10,0,94,10" Grid.ColumnSpan="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="42*"></RowDefinition>
+                <RowDefinition Height="42*"></RowDefinition>
+                <RowDefinition Height="42*"></RowDefinition>
+                <RowDefinition Height="42*"></RowDefinition>
+                <RowDefinition Height="42*"></RowDefinition>
+                <RowDefinition Height="50*"></RowDefinition>
+                <RowDefinition Height="42*"></RowDefinition>
+                <RowDefinition Height="42*"></RowDefinition>
+                <RowDefinition Height="42*"></RowDefinition>
+
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="198*"></ColumnDefinition>
+                <ColumnDefinition Width="23*"/>
+                <ColumnDefinition Width="481*"></ColumnDefinition>
+
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Margin="0,0,481,10" Grid.RowSpan="2" Grid.ColumnSpan="3" FontFamily="Ink Free" FontSize="20" >Name:</Label>
+            <Label Grid.Column="0" Margin="0,46,481,10" Grid.RowSpan="3" Grid.ColumnSpan="3" FontSize="20" FontFamily="Ink Free" >Country:</Label>
+            <Label Grid.Row="1" Grid.Column="0" Margin="0,46,480,10" Grid.RowSpan="3" Grid.ColumnSpan="3" FontFamily="Ink Free" FontSize="20" >City:</Label>
+            <Label Grid.Row="2" Grid.Column="0" Margin="0,46,480,10" Grid.RowSpan="3" Grid.ColumnSpan="3" FontSize="20" FontFamily="Ink Free" >Accommodation type:</Label>
+            <Label Grid.Row="3" Grid.Column="0" Margin="0,46,450,10" Grid.RowSpan="3" Grid.ColumnSpan="3" FontFamily="Ink Free" FontSize="20" >Max guests:</Label>
+            <Label Grid.Row="4" Grid.Column="0" Margin="0,37,0,40" Grid.RowSpan="3" Grid.ColumnSpan="2" FontFamily="Ink Free" FontSize="20" Content="Min number of days &#xD;&#xA;for reservation:" />
+            <Label Grid.Row="6" Grid.Column="0" Margin="0,1,0,5" Grid.ColumnSpan="2" FontFamily="Ink Free" FontSize="19">Days before cancellation:</Label>
+            <Label Grid.Column="2" Margin="282,-1,-66,10" FontFamily="Ink Free" FontSize="20">Image url/urls:</Label>
+
+            <TextBox Grid.Row="0" Text="{Binding Path=NewAccommodation.Name, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True }"
+                      Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Margin="6,5,279,5" Grid.Column="2"/>
+            <TextBox Grid.Row="1" Text="{Binding Path=NewLocation.Country, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True }"
+                      Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Margin="6,5,279,5" Grid.Column="2"/>
+            <TextBox Grid.Row="2" Text="{Binding Path=NewLocation.City, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True }"
+                      Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Margin="6,5,279,5" Grid.Column="2"/>
+            <ComboBox Grid.Row="3" Grid.Column="2" Name="TypeCombo" IsTextSearchEnabled="True" StaysOpenOnEdit="True"
+                      IsEditable="False" Margin="5,2,279,5" >
+                <ComboBoxItem Content="Apartment"></ComboBoxItem>
+                <ComboBoxItem Content="House"></ComboBoxItem>
+                <ComboBoxItem Content="Shack"></ComboBoxItem>
+            </ComboBox>
+
+            <TextBox Grid.Row="4" Text="{Binding Path=NewAccommodation.MaxGuests, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
+                      Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Margin="6,5,279,5" Grid.Column="2"/>
+            <TextBox Grid.Row="5" Text="{Binding Path=NewAccommodation.MinReservationDays,Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
+                      Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Margin="6,5,279,11" Grid.Column="2"/>
+            <TextBox Grid.Row="5" Text="{Binding Path=NewAccommodation.DaysBeforeCancelling,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
+                      Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Margin="6,50,279,14" Grid.Column="2" Grid.RowSpan="2"/>
+            <TextBox x:Name="ImageBox" Margin="230,24,-18,33" Grid.Column="2" Grid.RowSpan="2" />
+            <DataGrid x:Name="datagrid" Margin="235,35,-66,0" ItemsSource="{Binding Path=Images}" VerticalAlignment="Top" Height="177" Grid.Row="1" Grid.Column="2" Grid.RowSpan="5" AutoGenerateColumns="True" AutoGeneratingColumn="HideUrlColumn"/>
+
+            <Button Content="Save" HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Top" Width="162" Height="53" Margin="112,31,0,0" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="30" FontFamily="Ink Free" FontWeight="Bold" Foreground="#FF93D1E5" Click="SaveAccommodationClick"
+               Background="#ef233c">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <Button Content="Cancel" Grid.Column="2" HorizontalAlignment="Left" Margin="230,31,0,0" Grid.Row="7" VerticalAlignment="Top" Width="178" Height="53" Grid.RowSpan="2" FontSize="30" FontFamily="Ink Free" FontWeight="Bold" Foreground="#FF93D1E5" Click="CancelButton"
+               Background="#ef233c">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+
+        </Grid>
+        <Button Grid.Column="1" Content="Add" HorizontalAlignment="Left" Margin="299,33,0,0" VerticalAlignment="Top" Click="AddUrlClick">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+    </Grid>
+</Window>

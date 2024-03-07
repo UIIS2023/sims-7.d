@@ -1,0 +1,67 @@
+﻿<Window x:Class="BookingApplication.WPF.View.OwnerView.RenovationsOverview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookingApplication.WPF.View.OwnerView"
+        mc:Ignorable="d"
+        Title="RenovationsOverview" WindowStartupLocation="CenterScreen" Height="768" Width="1024">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.7,1" StartPoint="0.4,0">
+                <GradientStop Color="Black"/>
+                <GradientStop Color="#ae2012" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="850"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,57">
+
+            <DataGrid Background="#ee9b00" ItemsSource="{Binding AccommodationRenovations}"
+                     
+                      IsReadOnly="True" SelectionMode="Single" 
+                      SelectedItem="{Binding Path = SelectedRenovation, UpdateSourceTrigger=PropertyChanged}"
+                  AutoGenerateColumns="False" Height="394" HeadersVisibility="Column" FontSize="13">
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="Accommodation Id" Binding="{Binding AccommodationId}" Width="130"/>
+                    <DataGridTextColumn Header="Duration in days" Binding="{Binding NumberOfDays}" Width="110"/>
+                    <DataGridTextColumn Header="Start day" Binding="{Binding StartDate}" Width="200"/>
+                    <DataGridTextColumn Header="End day" Binding="{Binding EndDate}" Width="200"/>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
+
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </StackPanel>
+        <Button Grid.Column="1" Content="⬅Back" HorizontalAlignment="Left" Height="60" Margin="0,585,0,0" Grid.Row="1" VerticalAlignment="Top" Width="113" FontSize="30" FontFamily="Ink Free" FontWeight="Bold" Command="{Binding BackCommand}" Foreground="#001219"
+               Background="#ee9b00">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Grid.Column="1" Content="Cancel renovation" HorizontalAlignment="Center" Height="60" Margin="0,585,0,0" Grid.Row="1" VerticalAlignment="Top" Width="332" FontSize="30" FontFamily="Ink Free" FontWeight="Bold" Foreground="#001219"
+               Background="#ee9b00" Command="{Binding CancelRenovateCommand}">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+    </Grid>
+</Window>

@@ -1,0 +1,242 @@
+﻿<Page x:Class="BookingApplication.WPF.View.TourGuideView.TourDateOverview"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BookingApplication.WPF.View.TourGuideView"
+      mc:Ignorable="d" 
+      Title="Tour Date Overview"
+      Width="1106"  
+      Height="800"
+      Style="{DynamicResource Background}">
+    <Page.Resources>
+        <Style x:Key="Button" TargetType="Button">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontFamily" Value="Arial"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+            <Setter Property="Background" Value="FloralWhite">
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="Border"
+                                CornerRadius="5,5,5,5"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                Background="FloralWhite"
+                                Grid.Row="1">
+
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#8d9f87"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#fffba0"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="DataGridRow" TargetType="DataGridRow">
+            <Setter Property="Background" Value="#f4f4d5"></Setter>
+            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#184E77"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DisabledButton" TargetType="Button">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontFamily" Value="Arial"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0.7" Color="#358f80" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid Margin="0,0,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <Border CornerRadius="5,5,5,5"
+                                    BorderBrush="Black"
+                                    BorderThickness="1"
+                                    Background="Black">
+                            </Border>
+                            <Border CornerRadius="5,5,5,5"
+                                    BorderBrush="Black"
+                                    BorderThickness="1"
+                                    Background="Gray"
+                                    Grid.Row="1">
+
+                                <ContentPresenter Content="{TemplateBinding Content}"
+                                                  Margin="{TemplateBinding Padding}" />
+                            </Border>
+                        </Grid>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Title" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="40" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontFamily" Value="Cascadia Code"></Setter>
+        </Style>
+
+        <Style x:Key="TextBox" TargetType="TextBox">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontFamily" Value="Arial"></Setter>
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0.1" Color="#e9edc9" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsSelectionActive" Value="True">
+                    <Setter Property="Background" Value="#fffba0"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ColumnHeader" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#ccd5ae"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="Toolbar" TargetType="ToolBar">
+            <Setter Property="Background" Value="#184E77"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+        </Style>
+        <Style x:Key="DataGrid" TargetType="DataGrid">
+            <Setter Property="Background" Value="#e9edc9"></Setter>
+        </Style>
+        <Style x:Key="DataCell" TargetType="DataGridCell">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Margin="0,0,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <Border CornerRadius="5,5,5,5"
+                                    BorderBrush="Black"
+                                    BorderThickness="1"
+                                    Background="Black">
+                            </Border>
+                            <Border CornerRadius="5,5,5,5"
+                                    BorderBrush="Black"
+                                    BorderThickness="1"
+                                    Background="#f4f4d5"
+                                    Grid.Row="1">
+
+                                <ContentPresenter Content="{TemplateBinding Content}"
+                                                  Margin="{TemplateBinding Padding}" />
+                            </Border>
+                        </Grid>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+        <Style x:Key="Background" TargetType="Page">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontFamily" Value="Arial"></Setter>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0.2" Color="#d9ed92" />
+                            <GradientStop Offset="0.9" Color="#67b99a" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="110"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Style="{DynamicResource Title}" FontSize="50" Margin="30,10,217,130">Tour Dates</TextBlock>
+
+        <TextBlock Grid.Row="1" Margin="72,0,71,405" Text="{Binding TourDateInfo }">
+            <Border Background="Black"></Border>
+        </TextBlock>
+        <Grid Grid.Row="1" Margin="72,100,71,10" Width="410">
+            <!--ToolBar Grid.Row="0" Height="30" Width="410" Margin="0,0,0,172" Background="#184E77" BorderThickness="1" BorderBrush="Black">
+                <Button Command="{Binding ShowTourDateFormCommand}" Style="{DynamicResource Button}">
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock Text="Add" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
+                <Separator Background="#184E77"></Separator>
+                <Button Command="{Binding DisplayTourDateInfoCommand}" Style="{DynamicResource Button}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Check Reservations" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
+            </ToolBar-->
+
+            <DataGrid ItemsSource="{Binding TourDates, UpdateSourceTrigger=PropertyChanged}" Width="410"
+                          SelectedItem="{Binding Path=SelectedTourDate}"
+                          IsReadOnly="True" SelectionMode="Single" 
+                          VerticalScrollBarVisibility="Visible"
+                          Style="{DynamicResource DataGrid}"
+                          RowStyle="{DynamicResource DataGridRow}"
+                          ColumnHeaderStyle="{DynamicResource ColumnHeader}"
+                          AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13" Margin="0,0,0,10" HorizontalAlignment="Left"
+                          >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Start Time" Binding="{Binding StartTime, StringFormat='MM/dd/yyyy h:mm tt'}" Width="200"/>
+                    <DataGridTextColumn Header="Current Guests" Binding="{Binding CurrentGuests}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Button Height="40" Width="300" Command="{Binding DisplayTourDateInfoCommand}" Style="{DynamicResource Button}" Content="Check Reservations" Margin="70,100,183,350"></Button>
+            <Button Height="40" Width="300" Command="{Binding ShowTourDateFormCommand}" Style="{DynamicResource Button}" Content="Start Tour Date" Margin="70,160,183,290"></Button>
+            <Button Height="40" Width="300" Command="{Binding StartTourDateCommand}" Style="{DynamicResource Button}" Content="Activate Tour Date" Margin="70,220,183,225"></Button>
+            <Button Height="40" Width="300" Command="{Binding EndTourDateCommand}" Style="{DynamicResource Button}" Content="End Tour Date" Margin="70,280,183,165"></Button>
+            <Button Height="40" Width="300" Command="{Binding CancelTourDateCommand}" Style="{DynamicResource Button}" Content="Cancel Tour Date" Margin="70,340,183,105"></Button>
+
+
+        </Grid>
+        <Button Grid.Row="2" Height="50" Width="300" Style="{DynamicResource Button}" Content="Return to Tour Form" Margin="403,0,403,60" Grid.ColumnSpan="2"/>
+
+    </Grid>
+</Page>

@@ -1,0 +1,77 @@
+﻿<Page x:Class="BookingApplication.WPF.View.TourGuestView.TourReviewPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BookingApplication.WPF.View.TourGuestView"
+      xmlns:urlValidation="clr-namespace:BookingApplication.WPF.View.TourGuestView.Validation"
+      xmlns:converters="clr-namespace:BookingApplication.WPF.View.TourGuestView.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TourReviewPage">
+    <Page.Resources>
+        <Style x:Key="MyButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="19"
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <converters:BooleanInverterConverter x:Key="BooleanInverterConverter"></converters:BooleanInverterConverter>
+    </Page.Resources>
+    <DockPanel>
+        <Label FontSize="50" DockPanel.Dock="Top" HorizontalAlignment="Center">LEAVE A REVIEW</Label>
+        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <Label>Guide's knowledge</Label>
+                <Slider x:Name="GuideKnowledgeSlider" Minimum="1" Maximum="5" Value="{Binding GuidesKnowledge}" TickFrequency="1" IsSnapToTickEnabled="True" Width="100" />
+                <TextBlock Text="{Binding GuidesKnowledge}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>Guide's language skill</Label>
+                <Slider x:Name="GuideLanguageSlider" Minimum="1" Maximum="5" Value="{Binding GuidesLanguage}" TickFrequency="1" IsSnapToTickEnabled="True" Width="100" />
+                <TextBlock Text="{Binding GuidesLanguage}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label>How interesting was the tour?</Label>
+                <Slider x:Name="TourInterestSlider" Minimum="1" Maximum="5" Value="{Binding TourQuality}" TickFrequency="1" IsSnapToTickEnabled="True" Width="100" />
+                <TextBlock Text="{Binding TourQuality}"></TextBlock>
+            </StackPanel>
+            <StackPanel>
+                <Label>Additional comment (optional)</Label>
+                <TextBox x:Name="CommentTextBox" Text="{Binding Comment}" Height="100" Width="300" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0, 10, 0, 0">
+                <Label VerticalAlignment="Center">Picture url</Label>
+                <TextBox x:Name="PictureUrlTextBox" Width="180">
+                    <TextBox.Text>
+                        <Binding Path="ImageUrl" UpdateSourceTrigger="PropertyChanged" NotifyOnValidationError="True">
+                            <Binding.ValidationRules>
+                                <urlValidation:UrlValidation />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <Button Command="{Binding UploadCommand}" IsEnabled="{Binding ElementName=PictureUrlTextBox, Path=(Validation.HasError), Converter={StaticResource BooleanInverterConverter}}" Margin="10, 0, 0, 0" Style="{StaticResource MyButtonStyle}">Upload</Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0, 50, 0, 0">
+                <Button Command="{Binding SubmitCommand}" Style="{StaticResource MyButtonStyle}">Post review</Button>
+                <Button Command="{Binding CancelCommand}" Margin="200,0,0,0" Style="{StaticResource MyButtonStyle}">Cancel</Button>
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</Page>

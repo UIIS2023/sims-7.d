@@ -1,0 +1,77 @@
+﻿<Window x:Class="BookingApplication.WPF.View.TourGuideView.GuideTourPointOverview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="GuideTourPointOverview" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="760"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="15"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="2" Grid.Column="1" Margin="0,0,0,54" Grid.RowSpan="2">
+            <DataGrid x:Name="TourPointsDataGrid" ItemsSource="{Binding TourPoints}"
+                      SelectedItem="{Binding Path=SelectedTourPoint}"
+                       SelectionMode="Single" CanUserAddRows="False"
+                  AutoGenerateColumns="False" Height="260" HeadersVisibility="Column" FontSize="13" Width="650" HorizontalAlignment="Left">
+                <DataGrid.Columns>
+                    <DataGridTextColumn IsReadOnly="True" Header="Name" Binding="{Binding Name}" Width="2*"/>
+                    <DataGridTextColumn IsReadOnly="True" Header="Order" Binding="{Binding Order}" Width="2*"/>
+                    <DataGridCheckBoxColumn IsReadOnly="True" Header="Active" Binding="{Binding Active}" Width="*"/>
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Button HorizontalAlignment="Right" Width="105" Margin="0,25,0,155">
+                <TextBlock>Active Tour Point <LineBreak/> and Mark Guests</TextBlock>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="1" Margin="0,140,0,0">
+            <Button Height="36"  Width="148" Content="Return" Margin="400,0,200,0" />
+        </Grid>
+
+        <ToolBar Grid.Row="0" Grid.ColumnSpan="3">
+            <Button x:Name="AddButton" >
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/Images/add.png" Width="20" Height="25"/>
+                    <TextBlock Text="Add" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button x:Name="ViewButton">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../Resources/Images/view.png" Width="20" Height="25"/>
+                    <TextBlock Text="View" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button x:Name="UpdateButton" >
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../Resources/Images/edit.png" Width="20" Height="25"/>
+                    <TextBlock Text="Update" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button x:Name="DeleteButton">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../Resources/Images/delete.png" Width="20" Height="25"/>
+                    <TextBlock Name="DeleteTxtBlock" Text="Delete" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Separator/>
+
+        </ToolBar>
+
+    </Grid>
+</Window>
